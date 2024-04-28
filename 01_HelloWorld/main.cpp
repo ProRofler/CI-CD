@@ -1,7 +1,8 @@
 #include <iostream>
-#include "version.h"
+#include "lib.h"
 
 int main(int, char**){
+    int ver = version();
     std::cout << "Hello, from CI-CD-HelloWorld!\n"
-              << "Version: " << version << '\n';
+              << "Version: " << ver << '\n';
 }
