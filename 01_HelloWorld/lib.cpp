@@ -3,5 +3,5 @@
 
 int version()
 {
-    return 12;
+    return PROJECT_VERSION_PATCH;
 }

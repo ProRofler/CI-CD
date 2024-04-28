@@ -1,13 +1,15 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(CI-CD-HelloWorld VERSION 0.1.0 LANGUAGES C CXX)
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
+
+project(CI-CD-HelloWorld VERSION ${PROJECT_VERSION})
 
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 
-set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(PROJECT_VESRION 0.0.${PATCH_VERSION})
+
 
 configure_file(version.h.in version.h)
 
