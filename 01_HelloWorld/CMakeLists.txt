@@ -5,15 +5,9 @@ set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
 project(CI-CD-HelloWorld VERSION ${PROJECT_VERSION})
 
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREADED ON)
-set(Boost_USE_STATIC_RUNTIME OFF)
-
 if(MINGW)
     link_libraries(ws2_32 wsock32)
 endif()
-
-find_package(Boost REQUIRED)
 
 include(CTest)
 enable_testing()
@@ -37,11 +31,6 @@ target_include_directories(CI-CD-HelloWorld_lib
 target_link_libraries(CI-CD-HelloWorld PRIVATE
 CI-CD-HelloWorld_lib
 )
-target_link_libraries(CI-CD-HelloWorld_lib
-                      ${Boost_FILESYSTEM_LIBRARY}
-                      ${Boost_SYSTEM_LIBRARY}
-                      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-                      )
 
 if (MSVC)
     target_compile_options(CI-CD-HelloWorld PRIVATE

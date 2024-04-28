@@ -31,8 +31,12 @@
 *.out
 *.app
 
-#Folders
-*/build
-
-#IDE specific
-*/.vscode
+# IDE specific
+cmake-build-debug/
+cmake-build-release/
+Build/
+build/
+*.DS_Store
+.vscode/
+.vs/
+.idea/
