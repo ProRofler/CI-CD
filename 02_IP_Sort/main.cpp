@@ -4,13 +4,14 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
-#include "IP_Adress.h"
 
 
-// comparator written by chatgpt
-// TODO: rewrite it by myself
+// comparator written with support of chatgpt
 // research more info on comparators
-struct CompareIPAddresses {
+class CompareIPAddresses {
+
+    public:
+    
     bool operator()(const std::string& lhs, const std::string& rhs) const {
         // split ip adress on octets
         std::vector<int> lhsOctets = splitIP(lhs);
@@ -22,19 +23,19 @@ struct CompareIPAddresses {
                 return lhsOctets[i] > rhsOctets[i];
             }
         }
-        // if all octets are equal, then ip aress is equal
+        // if all octets are equal, then ip adress is equal
         return false;
     }
 
 private:
     // method to split ip adress into octets
-    std::vector<int> splitIP(const std::string& ipAddress) const {
+        std::vector<int> splitIP(const std::string& ipAddress) const{
         std::vector<int> octets;
         std::istringstream iss(ipAddress);
         std::string octet;
-        while (std::getline(iss, octet, '.')) {
-            octets.push_back(std::stoi(octet));
-        }
+            while (std::getline(iss, octet, '.')) {
+                octets.push_back(std::stoi(octet));
+            }
         return octets;
     }
 };
@@ -51,7 +52,7 @@ try{
         return 1;
     }
 
-    //using set with std::greater comparator to create an ordered set with reverse order
+    //using set with custom comparator to create an ordered set with reverse order
     std::set<std::string, CompareIPAddresses> ip_list;
 
     std::string line;
