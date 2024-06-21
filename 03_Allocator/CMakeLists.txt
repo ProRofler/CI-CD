@@ -12,7 +12,7 @@ endif()
 include(CTest)
 enable_testing()
 
-add_executable(Allocator main.cpp "allocator.h" "allocator.cpp")
+add_executable(Allocator main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
