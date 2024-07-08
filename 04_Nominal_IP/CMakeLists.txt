@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.28)
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
-project(03_Allocator VERSION ${PROJECT_VERSION})
+project(04_Nominal_IP VERSION ${PROJECT_VERSION})
 
 if(MINGW)
     link_libraries(ws2_32 wsock32)
@@ -12,23 +12,23 @@ endif()
 include(CTest)
 enable_testing()
 
-add_executable(Allocator main.cpp)
+add_executable(Nomminal_IP main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
 include(CPack)
 
-set_target_properties(Allocator PROPERTIES
+set_target_properties(Nomminal_IP PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
 if (MSVC)
-    target_compile_options(Allocator PRIVATE
+    target_compile_options(Nomminal_IP PRIVATE
         /W4
     )
 else ()
-    target_compile_options(Allocator PRIVATE
+    target_compile_options(Nomminal_IP PRIVATE
         -Wall -Wextra -pedantic -Werror
     )
 endif()
@@ -41,7 +41,7 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 set(CPACK_PACKAGE_CONTACT example@example.com)
 
-install(TARGETS Allocator RUNTIME DESTINATION bin)
+install(TARGETS Nomminal_IP RUNTIME DESTINATION bin)
 
 enable_testing()
 
