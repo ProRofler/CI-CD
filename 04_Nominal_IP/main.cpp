@@ -4,6 +4,28 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <type_traits>
+
+
+//primary template inheriting type trait
+template<class Container>
+struct is_container : std::false_type{};
+
+//vector specialization
+template<class Container, typename Alloc>
+struct is_container<std::vector<Container, Alloc>> : std::true_type{};
+
+//list specialization
+template<class Container, typename Alloc>
+struct is_container<std::list<Container, Alloc>> : std::true_type{};
+
+// list vector metafunction
+template<typename T>
+typename std::enable_if<is_container<T>::value, void>::type
+print_ip(T value){
+    std::cout << "List\\vector output template " << value.front() << std::endl;
+
+}
 
 template <typename T>  // integer func
 typename std::enable_if<std::is_integral<T>::value, void>::type print_ip(
@@ -17,10 +39,10 @@ typename std::enable_if<std::is_same<T, std::string>::value>::type print_ip(
     std::cout << "string output template " << value << std::endl;
 }
 
-template <typename T>  // container func
-auto print_ip(T value) -> decltype(value.sort()) {
-    std::cout << "vector/list output " << std::endl;
-}
+// template <typename T>  // container func
+// auto print_ip(T value) -> decltype(value.sort()) {
+//     std::cout << "vector/list output " << std::endl;
+// }
 
 
 int main() {
@@ -32,8 +54,9 @@ int main() {
 
     print_ip(std::string{"Hello, World!"});
 
-    //print_ip(std::vector<int>{100, 200, 300, 400});  // 100.200.300.400
+    print_ip(std::vector<int>{100, 200, 300, 400});  // 100.200.300.400
     print_ip(std::list<short>{400, 300, 200, 100});  // 400.300.200.100
+
 
     return 0;
 }
