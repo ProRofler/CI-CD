@@ -29,7 +29,7 @@ if (MSVC)
     )
 else ()
     target_compile_options(Nominal_IP PRIVATE
-        -Wall -Wextra -pedantic -Werror
+        -Wall -Wextra -pedantic -Werror 
     )
 endif()
 
