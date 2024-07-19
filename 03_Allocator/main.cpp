@@ -7,6 +7,7 @@
 #define UNUSED(variable) (void)variable
 
 
+
 template <typename T> 
 class allocator_log{
 
