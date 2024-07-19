@@ -40,6 +40,7 @@ class allocator_log{
     }
 
     pointer allocate(std::size_t n, const_void_pointer hint){
+        UNUSED(hint);
         return allocate(n);
     }
 
