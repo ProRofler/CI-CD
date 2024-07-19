@@ -6,10 +6,6 @@
 
 #define UNUSED(variable) (void)variable
 
-#ifdef _MSC_VER
-#define _ENFORCE_MATCHING_ALLOCATORS 0
-#endif
-
 
 template <typename T> 
 class allocator_log{

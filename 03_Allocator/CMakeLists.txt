@@ -25,6 +25,7 @@ set_target_properties(Allocator PROPERTIES
 
 if (MSVC)
     target_compile_options(Allocator PRIVATE
+        add_definitions(-D_ENFORCE_MATCHING_ALLOCATORS=0)
         /W4
     )
 else ()
