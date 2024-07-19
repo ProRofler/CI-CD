@@ -56,33 +56,30 @@ constexpr bool are_same_type_tuple =
 
 // list vector metafunction
 template <typename T>
-typename std::enable_if<is_container<T>::value, void>::type print_ip(T value) {
+typename std::enable_if<is_container<T>::value, void>::type print_ip(T container) {
     std::cout << "Template output for vector/list: ";
-    auto it = value.begin();
-    for (const auto element : value) {
-        std::cout << element;
-
-        if (std::next(it) == value.end()) {
-            std::cout << std::endl;
-        } else {
-            std::cout << '.';
-        }
+    auto it = container.begin();
+    for (const auto element : container) {
+        std::cout << element << (std::next(it) != container.end() ? '.' : '\n');
         it++;
     }
 }
 
-template <typename T>  // integer func
+// integer func
+template <typename T> 
 typename std::enable_if<std::is_integral<T>::value, void>::type print_ip(
     T value) {
     std::cout << "integer output template " << value << std::endl;
 }
 
-template <typename T>  // string func, output as is
+// string func, output as is
+template <typename T>  
 typename std::enable_if<std::is_same<T, std::string>::value>::type print_ip(
-    T value) {
-    std::cout << "Template output for string: " << value << std::endl;
+    T str) {
+    std::cout << "Template output for string: " << str << std::endl;
 }
 
+//tuple func
 template <typename T>
 typename std::enable_if<
     is_tuple<T>::value &&
@@ -94,9 +91,11 @@ typename std::enable_if<
     void>::type
 print_ip(const T& value) {
     std::cout << "tuple output template ";
-    std::apply([](const auto&... args) { ((std::cout << args << '.'), ...); },
+    std::size_t i = 1;
+    constexpr auto size = std::tuple_size<std::decay_t<T>>::value;
+    std::apply([&i](const auto&... args) { ((std::cout << args <<  (i++ < size ? '.' : '\n') ), ...);
+    },
                value);
-    std::cout << std::endl;
 }
 
 // template <typename T>
@@ -122,7 +121,7 @@ int main() {
 
     print_ip(std::vector<int>{100, 200, 300, 400});  // 100.200.300.400
     print_ip(std::list<short>{400, 300, 200, 100});  // 400.300.200.100
-    // print_ip(std::make_tuple(123, 456, 789, 0));  // 123.456.789.0
+    print_ip(std::make_tuple(123, 456, 789, 0));  // 123.456.789.0
 
     return 0;
 }
