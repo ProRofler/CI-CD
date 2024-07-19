@@ -12,7 +12,7 @@ endif()
 include(CTest)
 enable_testing()
 
-add_executable(IP_Sort main.cpp "IP_Adress.h" "IP_Adress.cpp")
+add_executable(IP_Sort main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
