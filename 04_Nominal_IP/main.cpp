@@ -72,9 +72,9 @@ template <typename T>
 void print_bytes(const T& value) {
     const unsigned char* byte_prt =
         reinterpret_cast<const unsigned char*>(&value);
-    for (size_t i = sizeof(T)-1; i != -1; i--) {
+    for (size_t i = sizeof(T)-1; i != size_t(-1); i--) {
         std::cout << static_cast<int>(byte_prt[i])
-                  << (i != 0 ? '.' : '\0');
+                  << (i != size_t(0) ? '.' : '\0');
     }
 }
 // integer func
