@@ -1,7 +1,9 @@
 #include "lib.h"
+#include "../build/01_HelloWorld/version.h"
 
+namespace ver {
 int version()
 {
-    return 4;
+    return PROJECT_VERSION_PATCH;
 }
-
+}

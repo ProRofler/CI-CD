@@ -1,19 +1,27 @@
 cmake_minimum_required(VERSION 3.28)
 
-set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PATCH_VERSION "4" CACHE INTERNAL "Patch version")
 set(PROJECT_VERSION 0.0.${PATCH_VERSION})
 
 project(CI-CD-HelloWorld VERSION ${PROJECT_VERSION})
+
+configure_file(version.h.in version.h)
 
 if(MINGW)
     link_libraries(ws2_32 wsock32)
 endif()
 
-include(CTest)
-enable_testing()
 
 add_executable(CI-CD-HelloWorld main.cpp)
-add_library(CI-CD-HelloWorld_lib lib.cpp)
+add_executable(test_version test_version.cpp)
+#add_library(CI-CD-HelloWorld_lib lib.cpp)
+
+include(CTest)
+
+enable_testing()
+
+target_link_libraries(test_version CI-CD-HelloWorld_lib gtest gtest_main)
+
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
@@ -57,7 +65,5 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
 
 install(TARGETS CI-CD-HelloWorld RUNTIME DESTINATION bin)
-
-enable_testing()
 
 add_test(test_version test_version)
