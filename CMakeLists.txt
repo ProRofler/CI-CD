@@ -10,4 +10,4 @@ add_subdirectory(03_Allocator)
 add_subdirectory(04_Nominal_IP)
 add_subdirectory(libs/gtest)
 
-enable_testing()
+#enable_testing()

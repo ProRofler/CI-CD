@@ -78,4 +78,4 @@ set(CPACK_PACKAGE_CONTACT example@example.com)
 
 install(TARGETS CI-CD-HelloWorld RUNTIME DESTINATION bin)
 
-add_test(test_version test_version)
+add_test(NAME test_version COMMAND test_version)
