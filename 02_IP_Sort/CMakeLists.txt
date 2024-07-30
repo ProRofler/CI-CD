@@ -9,9 +9,6 @@ if(MINGW)
     link_libraries(ws2_32 wsock32)
 endif()
 
-include(CTest)
-enable_testing()
-
 add_executable(IP_Sort main.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
@@ -42,7 +39,3 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 set(CPACK_PACKAGE_CONTACT example@example.com)
 
 install(TARGETS IP_Sort RUNTIME DESTINATION bin)
-
-enable_testing()
-
-add_test(test_version test_version)

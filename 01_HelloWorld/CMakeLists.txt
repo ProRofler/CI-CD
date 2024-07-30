@@ -7,24 +7,22 @@ project(CI-CD-HelloWorld VERSION ${PROJECT_VERSION})
 
 configure_file(version.h.in version.h)
 
-if(MINGW)
-    link_libraries(ws2_32 wsock32)
-endif()
-
-if(WIN32)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
-    set(CMAKE_CXX_FLAGS_RELEASE "/MT") # for static libs
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-endif(WIN32)
-
 add_executable(CI-CD-HelloWorld main.cpp)
 add_executable(test_version test_version.cpp)
-#add_library(CI-CD-HelloWorld_lib lib.cpp)
-
-include(CTest)
-
 target_link_libraries(test_version CI-CD-HelloWorld_lib gtest gtest_main)
-target_link_libraries(test_version gtest gtest_main)
+
+set_target_properties(test_version PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+)
+
+
+enable_testing()
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_test(test_version test_version)
+endif()
+
+#add_library(CI-CD-HelloWorld_lib lib.cpp)
 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
