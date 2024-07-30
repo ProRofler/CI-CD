@@ -69,4 +69,4 @@ jobs:
 ######################################
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: ctest --output-on-failure --config Release
+      run: ctest --output-on-failure
