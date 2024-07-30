@@ -20,6 +20,7 @@ include(CTest)
 enable_testing()
 
 target_link_libraries(test_version CI-CD-HelloWorld_lib gtest gtest_main)
+target_link_libraries(test_version gtest gtest_main)
 
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
