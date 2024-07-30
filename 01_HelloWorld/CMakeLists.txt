@@ -41,6 +41,7 @@ CI-CD-HelloWorld_lib
 )
 
 if (MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
     target_compile_options(CI-CD-HelloWorld PRIVATE
         /W4
     )
