@@ -37,12 +37,6 @@ set_target_properties(CI-CD-HelloWorld PROPERTIES
     CXX_STANDARD_REQUIRED ON
 )
 
-set_target_properties(test_version PROPERTIES
-    CXX_STANDARD 17
-    CXX_STANDARD_REQUIRED ON
-    CMAKE_BUILD_TYPE Release
-)
-
 target_include_directories(CI-CD-HelloWorld_lib
     PRIVATE "${CMAKE_BINARY_DIR}"
 )
@@ -78,4 +72,3 @@ set(CPACK_PACKAGE_CONTACT example@example.com)
 
 install(TARGETS CI-CD-HelloWorld RUNTIME DESTINATION bin)
 
-add_test(NAME test_version COMMAND test_version)

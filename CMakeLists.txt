@@ -10,4 +10,11 @@ add_subdirectory(03_Allocator)
 add_subdirectory(04_Nominal_IP)
 add_subdirectory(libs/gtest)
 
-#enable_testing()
+set_target_properties(test_version PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CMAKE_BUILD_TYPE Release
+)
+
+enable_testing()
+add_test(NAME test_version COMMAND test_version)
