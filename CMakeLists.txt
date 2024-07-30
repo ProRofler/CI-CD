@@ -6,7 +6,7 @@ if(MSVC)
 
 endif()
 
-add_library(CI-CD-HelloWorld_lib 01_HelloWorld/lib.cpp)
+add_library(CI-CD-HelloWorld_lib STATIC 01_HelloWorld/lib.cpp)
 
 add_subdirectory(01_HelloWorld)
 add_subdirectory(02_IP_Sort)

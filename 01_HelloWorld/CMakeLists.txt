@@ -41,22 +41,23 @@ CI-CD-HelloWorld_lib
 )
 
 if (MSVC)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>DLL")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
     target_compile_options(CI-CD-HelloWorld PRIVATE
-        /W4
+    /W4
     )
     target_compile_options(CI-CD-HelloWorld_lib PRIVATE
-        /W4
+    /W4
     )
-else ()
+    else ()
     target_compile_options(CI-CD-HelloWorld PRIVATE
-        -Wall -Wextra -pedantic -Werror
+    -Wall -Wextra -pedantic -Werror
     )
     target_compile_options(CI-CD-HelloWorld_lib PRIVATE
-        -Wall -Wextra -pedantic -Werror
+    -Wall -Wextra -pedantic -Werror
     )
-endif()
+    endif()
+    
 
 set(CPACK_GENERATOR DEB)
 
