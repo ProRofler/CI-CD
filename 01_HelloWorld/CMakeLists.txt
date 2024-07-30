@@ -18,13 +18,7 @@ add_executable(test_version test_version.cpp)
 
 include(CTest)
 
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    enable_testing()
-    add_custom_target(run_tests
-        COMMAND ${CMAKE_CTEST_COMMAND} --config Release --output-on-failure
-        DEPENDS test_version
-    )
-endif()
+enable_testing()
 
 target_link_libraries(test_version CI-CD-HelloWorld_lib gtest gtest_main)
 
