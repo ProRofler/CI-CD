@@ -14,7 +14,6 @@ endif()
 if(WIN32)
     set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
     set(CMAKE_CXX_FLAGS_RELEASE "/MT") # for static libs
-    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 endif(WIN32)
 
@@ -36,6 +35,12 @@ include(CPack)
 set_target_properties(CI-CD-HelloWorld PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
+)
+
+set_target_properties(test_version PROPERTIES
+    CXX_STANDARD 17
+    CXX_STANDARD_REQUIRED ON
+    CMAKE_BUILD_TYPE Release
 )
 
 target_include_directories(CI-CD-HelloWorld_lib
