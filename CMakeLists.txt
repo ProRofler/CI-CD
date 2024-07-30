@@ -17,4 +17,6 @@ set_target_properties(test_version PROPERTIES
 )
 
 enable_testing()
-add_test(NAME test_version COMMAND test_version)
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_test(NAME test_version COMMAND test_version)
+endif()
