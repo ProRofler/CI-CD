@@ -56,4 +56,4 @@ jobs:
 ######################################
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: ctest --config Release --output-on-failure
+      run: cmake --build . --config Release --target test
