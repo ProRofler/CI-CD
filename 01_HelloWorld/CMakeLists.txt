@@ -11,6 +11,12 @@ if(MINGW)
     link_libraries(ws2_32 wsock32)
 endif()
 
+if(WIN32)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
+    set(CMAKE_CXX_FLAGS_RELEASE "/MT") # for static libs
+    set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+endif(WIN32)
 
 add_executable(CI-CD-HelloWorld main.cpp)
 add_executable(test_version test_version.cpp)
@@ -41,8 +47,6 @@ CI-CD-HelloWorld_lib
 )
 
 if (MSVC)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
     target_compile_options(CI-CD-HelloWorld PRIVATE
     /W4
     )
