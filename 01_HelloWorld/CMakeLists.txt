@@ -17,7 +17,6 @@ add_executable(test_version test_version.cpp)
 #add_library(CI-CD-HelloWorld_lib lib.cpp)
 
 include(CTest)
-
 enable_testing()
 
 target_link_libraries(test_version CI-CD-HelloWorld_lib gtest gtest_main)

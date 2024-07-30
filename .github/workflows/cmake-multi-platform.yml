@@ -69,4 +69,4 @@ jobs:
 ######################################
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
-      run: cmake --build . --target run_tests
+      run: cmake --build . --target test_version
