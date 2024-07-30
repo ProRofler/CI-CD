@@ -41,6 +41,8 @@ CI-CD-HelloWorld_lib
 )
 
 if (MSVC)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>DLL")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MD")
     target_compile_options(CI-CD-HelloWorld PRIVATE
         /W4
     )
