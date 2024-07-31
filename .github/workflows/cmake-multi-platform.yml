@@ -73,18 +73,11 @@ jobs:
 
 ######################################
 
-    - name: Package on Windows
-      if: ${{ matrix.os == 'windows-latest' }}
+    - name: Package 
       run: |
         cd ${{ steps.strings.outputs.build-output-dir }}
-        msbuild package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.exe *
-
-    - name: Package on Linux
-      if: ${{ matrix.os == 'ubuntu-latest' }}
-      run: |
-        cd ${{ steps.strings.outputs.build-output-dir }}
-        tar -czvf package-linux-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz *
-
+        cmake --build . --target package
+        
     - name: Upload Artifact for Release on Windows
       if: ${{ matrix.os == 'windows-latest' }}
       uses: actions/upload-artifact@v4
