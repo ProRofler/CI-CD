@@ -77,7 +77,7 @@ jobs:
       run: |
         cd ${{ steps.strings.outputs.build-output-dir }}
         cmake -DCMAKE_INSTALL_PREFIX=package--${{ matrix.build_type }}-${{ matrix.cpp_compiler }} ..
-        export CPACK_PACKAGE_DIRECTORY=package--${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
+        cmake CPACK_PACKAGE_DIRECTORY=package--${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
         cmake --build . --target package
 
     - name: Upload Artifact for Release on Windows
