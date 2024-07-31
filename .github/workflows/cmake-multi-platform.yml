@@ -85,17 +85,61 @@ jobs:
         cd ${{ steps.strings.outputs.build-output-dir }}
         tar -czvf package-linux-${{ matrix.build_type }}.tar.gz *
 
-    - name: Upload Windows Artifact
+    - name: Upload Artifact for Release on Windows
       if: ${{ matrix.os == 'windows-latest' }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: package-windows-${{ matrix.build_type }}
         path: ${{ steps.strings.outputs.build-output-dir }}/package-windows-${{ matrix.build_type }}.tar.gz
 
-    - name: Upload Linux Artifact
+    - name: Upload Artifact for Release on Linux
       if: ${{ matrix.os == 'ubuntu-latest' }}
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: package-linux-${{ matrix.build_type }}
         path: ${{ steps.strings.outputs.build-output-dir }}/package-linux-${{ matrix.build_type }}.tar.gz
-      
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: Release v${{ github.run_number }}
+        draft: false
+        prerelease: false
+
+    - name: Download Artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: ./artifacts
+
+    - name: Upload Windows Release Asset
+      if: ${{ matrix.os == 'windows-latest' }}
+      uses: actions/upload-release-asset@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifacts/package-windows-${{ matrix.build_type }}.tar.gz
+        asset_name: package-windows-${{ matrix.build_type }}.tar.gz
+        asset_content_type: application/gzip
+
+    - name: Upload Linux Release Asset
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: actions/upload-release-asset@v4
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./artifacts/package-linux-${{ matrix.build_type }}.tar.gz
+        asset_name: package-linux-${{ matrix.build_type }}.tar.gz
+        asset_content_type: application/gzip
