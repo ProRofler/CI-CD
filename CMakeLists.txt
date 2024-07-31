@@ -6,7 +6,7 @@ set(CMAKE_CONFIGURATION_TYPES "Release" CACHE STRING "" FORCE)
 if(WIN32)
     set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded)
     set(CMAKE_CXX_FLAGS_RELEASE "/MT") # for static libs
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>DLL")
 endif(WIN32)
 
 if(MINGW)
