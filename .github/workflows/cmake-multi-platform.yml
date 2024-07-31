@@ -76,9 +76,9 @@ jobs:
     - name: Package
       run: |
         cd ${{ steps.strings.outputs.build-output-dir }}
-        cmake -DCMAKE_INSTALL_PREFIX=package--${{ matrix.build_type }}-${{ matrix.cpp_compiler }} ..
-        cmake CPACK_PACKAGE_DIRECTORY=package--${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        cmake --build . --target package
+        mkdir package
+        cd package
+        cmake --build ${{ steps.strings.outputs.build-output-dir }} --target package --config Release
 
     - name: Upload Artifact for Release on Windows
       if: ${{ matrix.os == 'windows-latest' }}
@@ -93,6 +93,7 @@ jobs:
       with:
         name: package-linux-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
         path: ${{ steps.strings.outputs.build-output-dir }}/package--${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz
+
 
   release:
     needs: build
