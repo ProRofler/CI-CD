@@ -70,3 +70,32 @@ jobs:
     - name: Test
       working-directory: ${{ steps.strings.outputs.build-output-dir }}
       run: ctest --output-on-failure -C ${{ matrix.build_type }}
+
+######################################
+
+    - name: Package on Windows
+      if: ${{ matrix.os == 'windows-latest' }}
+      run: |
+        cd ${{ steps.strings.outputs.build-output-dir }}
+        tar -czvf package-windows-${{ matrix.build_type }}.tar.gz *
+
+    - name: Package on Linux
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      run: |
+        cd ${{ steps.strings.outputs.build-output-dir }}
+        tar -czvf package-linux-${{ matrix.build_type }}.tar.gz *
+
+    - name: Upload Windows Artifact
+      if: ${{ matrix.os == 'windows-latest' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: package-windows-${{ matrix.build_type }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/package-windows-${{ matrix.build_type }}.tar.gz
+
+    - name: Upload Linux Artifact
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: package-linux-${{ matrix.build_type }}
+        path: ${{ steps.strings.outputs.build-output-dir }}/package-linux-${{ matrix.build_type }}.tar.gz
+      
