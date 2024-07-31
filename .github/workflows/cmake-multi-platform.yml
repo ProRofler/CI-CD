@@ -141,5 +141,5 @@ jobs:
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./artifacts/package-linux-${{ matrix.build_type }}.tar.gz
-        asset_name: package-linux-${{ matrix.build_type }}.tar.gz
+        asset_name: package-linux-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz
         asset_content_type: application/gzip
