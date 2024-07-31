@@ -77,7 +77,7 @@ jobs:
       if: ${{ matrix.os == 'windows-latest' }}
       run: |
         cd ${{ steps.strings.outputs.build-output-dir }}
-        tar -czvf package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz *
+        tar -czvf package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.exe *
 
     - name: Package on Linux
       if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -90,7 +90,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz
+        path: ${{ steps.strings.outputs.build-output-dir }}/package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.exe
 
     - name: Upload Artifact for Release on Linux
       if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -108,7 +108,7 @@ jobs:
 
     - name: Create Release
       id: create_release
-      uses: actions/create-release@v4
+      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
@@ -118,24 +118,24 @@ jobs:
         prerelease: false
 
     - name: Download Artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v3
       with:
         path: ./artifacts
 
     - name: Upload Windows Release Asset
       if: ${{ matrix.os == 'windows-latest' }}
-      uses: actions/upload-release-asset@v4
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz
-        asset_name: package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.tar.gz
+        asset_path: ./artifacts/package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.exe
+        asset_name: package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}.exe
         asset_content_type: application/gzip
 
     - name: Upload Linux Release Asset
       if: ${{ matrix.os == 'ubuntu-latest' }}
-      uses: actions/upload-release-asset@v4
+      uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
