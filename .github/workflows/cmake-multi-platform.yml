@@ -103,7 +103,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+      
+    - name: Download Artifacts
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: gh run download ${{ github.run_id }} --dir ./artifacts
+      
+      
+      ####################################
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -114,19 +121,7 @@ jobs:
         release_name: Release v${{ github.run_number }}
         draft: false
         prerelease: false
-
-    - name: Install GitHub CLI
-      run: sudo apt-get install gh
-
-    - name: Authenticate GitHub CLI
-      run: gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Download Artifacts
-      run: gh run download ${{ github.run_id }} --dir ./artifacts
-
-  
-####################################
-
+      
     - name: Upload Windows Release Asset
       uses: actions/upload-release-asset@v1
       env:
