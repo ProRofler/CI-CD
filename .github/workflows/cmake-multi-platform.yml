@@ -97,13 +97,6 @@ jobs:
 
 ##################################
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -111,9 +104,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ github.run_number }}
-        release_name: Release v${{ github.run_number }}
+        release_name: CI-CD release v${{ github.run_number }}
         draft: false
         prerelease: false
+
   
 ####################################
 
@@ -126,7 +120,7 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-win64.exe
         asset_name: CI-CD-0.0.${{ github.run_number }}-win64.exe
-        asset_content_type: application/executable
+        asset_content_type: application/vnd.microsoft.portable-executable
 
     - name: Upload Linux Release Asset
       if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -135,6 +129,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
+        asset_path: ${{ steps.strings.outputs.build-output-dir }}/
         asset_name: CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
         asset_content_type: application/gzip
