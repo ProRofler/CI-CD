@@ -18,7 +18,7 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
         build_type: [Release]
-        c_compiler: [gcc, clang, cl]
+        c_compiler: [gcc, cl]
         include:
           - os: windows-latest
             c_compiler: cl
@@ -26,14 +26,9 @@ jobs:
           - os: ubuntu-latest
             c_compiler: gcc
             cpp_compiler: g++
-          - os: ubuntu-latest
-            c_compiler: clang
-            cpp_compiler: clang++
         exclude:
           - os: windows-latest
             c_compiler: gcc
-          - os: windows-latest
-            c_compiler: clang
           - os: ubuntu-latest
             c_compiler: cl
 
@@ -85,14 +80,14 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-${{ matrix.cpp_compiler }}-win64.exe
+        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-win64.exe
 
     - name: Upload Artifact for Release on Linux
       if: ${{ matrix.os == 'ubuntu-latest' }}
       uses: actions/upload-artifact@v4
       with:
         name: package-linux-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-${{ matrix.cpp_compiler }}-Linux.tar.gz
+        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
 
 
 ##################################
@@ -130,8 +125,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-windows-Release-cl/CI-CD-0.0.${{ github.run_number }}-cl-win64.exe
-        asset_name: CI-CD-0.0.${{ github.run_number }}-cl-win64.exe
+        asset_path: ./artifacts/package-windows-Release-cl/CI-CD-0.0.${{ github.run_number }}-win64.exe
+        asset_name: CI-CD-0.0.${{ github.run_number }}-win64.exe
         asset_content_type: application/vnd.microsoft.portable-executable
 
     - name: Upload Linux gcc Release Asset
@@ -140,16 +135,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-linux-Release-g++/CI-CD-0.0.${{ github.run_number }}-g++-Linux.tar.gz
-        asset_name: CI-CD-0.0.${{ github.run_number }}-g++-Linux.tar.gz
+        asset_path: ./artifacts/package-linux-Release-g++/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
+        asset_name: CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
         asset_content_type: application/gzip
-
-    - name: Upload Linux clang Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/package-linux-Release-clang++/CI-CD-0.0.${{ github.run_number }}-clang++-Linux.tar.gz
-          asset_name: CI-CD-0.0.${{ github.run_number }}-clang++-Linux.tar.gz
-          asset_content_type: application/gzip
