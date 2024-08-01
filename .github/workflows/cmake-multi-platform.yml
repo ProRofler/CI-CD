@@ -85,14 +85,14 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-win64.exe
+        path: ./artifact/CI-CD-0.0.${{ github.run_number }}-win64.exe
 
     - name: Upload Artifact for Release on Linux
       if: ${{ matrix.os == 'ubuntu-latest' }}
       uses: actions/upload-artifact@v4
       with:
         name: package-linux-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
+        path: ./artifact/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
 
 
 ##################################
@@ -118,7 +118,7 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v3
       with:
-        path: ${{ steps.strings.outputs.build-output-dir }}
+        path: ./artifact
   
 ####################################
 
