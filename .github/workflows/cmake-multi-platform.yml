@@ -107,47 +107,7 @@ jobs:
     - name: Download Artifacts
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: gh run download ${{ github.run_id }} --dir ./artifacts
-      
-      
-      ####################################
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ github.run_number }}
-        release_name: Release v${{ github.run_number }}
-        draft: false
-        prerelease: false
-      
-    - name: Upload Windows Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-windows-Release-cl.zip
-        asset_name: package-windows-Release-cl.zip
-        asset_content_type: application/zip
-
-    - name: Upload Linux gcc Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-linux-Release-g++.zip
-        asset_name: package-linux-Release-g++.zip
-        asset_content_type: application/zip
-
-    - name: Upload Linux clang Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./artifacts/package-linux-Release-clang++.zip
-          asset_name: package-linux-Release-clang++.zip
-          asset_content_type: application/zip
+      run: | 
+        gh run download ${{ github.run_id }} --dir ./artifacts
+        cd ./artifacts
+        ls
