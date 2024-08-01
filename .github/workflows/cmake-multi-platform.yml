@@ -116,11 +116,25 @@ jobs:
         prerelease: false
 
     - name: Download artifacts
-      uses: aochmann/actions-download-artifact@1.0.0
+      id: download-artifact
+      uses: dawidd6/action-download-artifact@v6
       with:
         github_token: ${{secrets.GITHUB_TOKEN}}
+        workflow: cmake-multi-platform.yml
+        workflow_search: false
+        workflow_conclusion: in_progress
+        branch: master
+        run_id: ${{ github.event.workflow_run.id }}
+        name_is_regexp: true
+    
         path: ./artifacts
-        repo: ${{github.repository}}
+        # Optional, defaults to current repo
+        repo: ${{ github.repository }}
+    
+        check_artifacts: false
+        search_artifacts: false
+        skip_unpack: false
+        if_no_artifact_found: fail
   
 ####################################
 
