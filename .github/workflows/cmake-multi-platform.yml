@@ -85,14 +85,14 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: package-windows-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-win64.exe
+        path: ${{ steps.strings.outputs.build-output-dir }}/artefact/CI-CD-0.0.${{ github.run_number }}-win64.exe
 
     - name: Upload Artifact for Release on Linux
       if: ${{ matrix.os == 'ubuntu-latest' }}
       uses: actions/upload-artifact@v4
       with:
         name: package-linux-${{ matrix.build_type }}-${{ matrix.cpp_compiler }}
-        path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
+        path: ${{ steps.strings.outputs.build-output-dir }}/artefact/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
 
 
 ##################################
@@ -118,7 +118,7 @@ jobs:
     - name: Download Artifacts
       uses: actions/download-artifact@v3
       with:
-        path: ./artifacts
+        path: ${{ steps.strings.outputs.build-output-dir }}/artefact/
 
     - name: Upload Windows Release Asset
       if: ${{ matrix.os == 'windows-latest' }}
@@ -127,9 +127,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/
+        asset_path: ${{ steps.strings.outputs.build-output-dir }}/artefact/
         asset_name: CI-CD-0.0.${{ github.run_number }}-win64.exe
-        asset_content_type: application/gzip
+        asset_content_type: application/executable
 
     - name: Upload Linux Release Asset
       if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -138,6 +138,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/
+        asset_path: ${{ steps.strings.outputs.build-output-dir }}/artefact/
         asset_name: CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
         asset_content_type: application/gzip
