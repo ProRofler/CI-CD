@@ -1,0 +1,48 @@
+set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
+set(PROJECT_VERSION 0.0.${PATCH_VERSION})
+
+project(05_Matrix VERSION ${PROJECT_VERSION})
+
+if(MINGW)
+    link_libraries(ws2_32 wsock32)
+endif()
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+file(GLOB SAMPLE_HEADERS
+        *.h)
+
+file(GLOB SAMPLE_SOURCES
+        *.cpp)
+
+add_executable(${PROJECT_NAME} ${SAMPLE_HEADERS} ${SAMPLE_SOURCES})
+
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)
+
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    CXX_STANDARD 20
+    CXX_STANDARD_REQUIRED ON
+)
+
+if (MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        /W4
+    )
+else ()
+    target_compile_options(${PROJECT_NAME} PRIVATE
+        -Wall -Wextra -pedantic -Werror 
+    )
+endif()
+
+set(CPACK_GENERATOR DEB)
+
+set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
+
+set(CPACK_PACKAGE_CONTACT example@example.com)
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
