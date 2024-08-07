@@ -1,9 +1,14 @@
 #pragma once
+#include <vector>
+
+// infinite sparse matrix concept
 
 template <typename T, T V>
 class mat_inf {
    public:
-    mat_inf();
+    mat_inf() = delete;
+
+    mat_inf(int dimensions_num);
 
     ~mat_inf();
 
@@ -17,14 +22,18 @@ class mat_inf {
     const T default_value;
 
     // matrix related
-    T* p_mtx;
+    struct matrix_value {
+        T value;
+        std::vector<int> dimensions;
+    };
+
+    matrix_value matrix_data;
 
     // utils
-    unsigned long long size_a = 0;
-    const int default_capacity = 10;
+    size_t size_a = 0;
 
-    void increase_size(unsigned long long value) { size_a += value; }
-    void decrease_size(unsigned long long value) { size_a -= value; }
+    void increase_size(int value) { size_a += value; }
+    void decrease_size(int value) { size_a -= value; }
 };
 
 #include "mat_inf.tpp"
