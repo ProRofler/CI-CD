@@ -1,9 +1,8 @@
 #pragma once
 
-#include <vector>
 #include <functional>
+#include <vector>
 
-// Хеш-функция для std::vector
 struct vector_hash {
     std::size_t operator()(const std::vector<int>& v) const {
         std::size_t hash = 0;

@@ -90,51 +90,51 @@ jobs:
         path: ${{ steps.strings.outputs.build-output-dir }}/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
 
 
-##################################
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Download Artifacts
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: | 
-        gh run download ${{ github.run_id }} --dir ./artifacts
-        cd ./artifacts
-        ls -R
+##################################/
+#
+#  release:
+#    needs: build
+#    runs-on: ubuntu-latest
+#    steps:
+#    - name: Checkout code
+#      uses: actions/checkout@v4
+#      
+#    - name: Download Artifacts
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      run: | 
+#        gh run download ${{ github.run_id }} --dir ./artifacts
+#        cd ./artifacts
+#        ls -R
 
 ####################################
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ github.run_number }}
-        release_name: Release v${{ github.run_number }}
-        draft: false
-        prerelease: false
-      
-    - name: Upload Windows Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-windows-Release-cl/CI-CD-0.0.${{ github.run_number }}-win64.exe
-        asset_name: CI-CD-0.0.${{ github.run_number }}-win64.exe
-        asset_content_type: application/vnd.microsoft.portable-executable
+#    - name: Create Release
+#      id: create_release
+#      uses: actions/create-release@v1
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      with:
+#        tag_name: v${{ github.run_number }}
+#        release_name: Release v${{ github.run_number }}
+#        draft: false
+#        prerelease: false
+#      
+#    - name: Upload Windows Release Asset
+#      uses: actions/upload-release-asset@v1
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      with:
+#        upload_url: ${{ steps.create_release.outputs.upload_url }}
+#        asset_path: ./artifacts/package-windows-Release-cl/CI-CD-0.0.${{ github.run_number }}-win64.exe
+#        asset_name: CI-CD-0.0.${{ github.run_number }}-win64.exe
+#        asset_content_type: application/vnd.microsoft.portable-executable
 
-    - name: Upload Linux gcc Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./artifacts/package-linux-Release-g++/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
-        asset_name: CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
-        asset_content_type: application/gzip
+#    - name: Upload Linux gcc Release Asset
+#      uses: actions/upload-release-asset@v1
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      with:
+#        upload_url: ${{ steps.create_release.outputs.upload_url }}
+#        asset_path: ./artifacts/package-linux-Release-g++/CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
+#        asset_name: CI-CD-0.0.${{ github.run_number }}-Linux.tar.gz
+#        asset_content_type: application/gzip
