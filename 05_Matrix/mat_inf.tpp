@@ -3,6 +3,10 @@
 #include "mat_inf.h"
 
 template <typename T, T V>
+mat_inf<T, V>::mat_inf()
+    : default_value(V), dimensions(2) {}
+
+template <typename T, T V>
 mat_inf<T, V>::mat_inf(int dimensions_num)
     : default_value(V), dimensions(dimensions_num) {}
 
@@ -10,12 +14,20 @@ template <typename T, T V>
 mat_inf<T, V>::~mat_inf() {}
 
 template <typename T, T V>
-T& mat_inf<T, V>::operator[](int index) {
-    // return the element value
+mat_inf<T, V>& mat_inf<T, V>::operator[](int index) {
     std::cout << "Operator [] called" << std::endl;
+    temp_coords.push_back(index);
 
-    std::vector<int> coords;
-    coords.push_back(index);
+    return *this;
+}
 
-    return elemets_data[coords];
+template <typename T, T V>
+mat_inf<T, V>::operator T() {
+    if (temp_coords.size() != dimensions)
+        throw std::logic_error("Wrong number of dimensions");
+
+    std::vector<int> coords = temp_coords;
+    temp_coords.clear();
+
+    return data[coords];
 }

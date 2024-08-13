@@ -1,18 +1,15 @@
-#include <array>
+#include <vector>
 #include <iostream>
 
 #include "mat_inf.h"
 
 int main() {
-    mat_inf<int, 3> mat(1);
+    mat_inf<int, 3> mat;
 
-    auto f = mat[2];
-    std::cout << f << std::endl;
+    //mat[2][1] = 14;
 
-    mat[2] = 15;
-
-    f = mat[2];
-    std::cout << f << std::endl;
+    //auto f = mat[2][1];
+    std::cout << mat[2][1] << std::endl;
 
     return 0;
 }
