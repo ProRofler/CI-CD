@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-//NOT NEEDED?
+//NOT NEEDED but I'll keep it here just for future references
 
 template <typename T, T V>
 class mat_inf;

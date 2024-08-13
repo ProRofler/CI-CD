@@ -2,7 +2,7 @@
 #include <unordered_map>
 #include <vector>
 
-//#include "index_collector.h"
+// #include "index_collector.h"
 #include "vector_hash.h"
 
 // infinite sparse matrix concept
@@ -20,13 +20,15 @@ class mat_inf {
     std::vector<int> temp_coords;
 
    public:
-    mat_inf(); //default cinstructor result in 2D matrix
-    mat_inf(int dimensions_num); //constructor for N-dimensional matrix defined by user
-    ~mat_inf();
+    mat_inf();                    // default constructor result in 2D matrix
+    mat_inf(int dimensions_num);  // constructor for N-dimensional matrix
+                                  // defined by user
+    ~mat_inf() = default;
 
     operator T();
+    mat_inf<T,V>& operator=(T value);
+    
     mat_inf<T, V>& operator[](int index);
-
 
     // get
     size_t size() { return data.size(); }
