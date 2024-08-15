@@ -4,65 +4,60 @@
 
 template <typename T, T V>
 mat_inf<T, V>::mat_inf() : default_value(V), dimensions(2), temp_coords(2) {
-    temp_coords.shrink_to_fit();
+    temp_coords.reserve(2);
 }
 template <typename T, T V>
 mat_inf<T, V>::mat_inf(int dimensions_num)
     : default_value(V),
       dimensions(dimensions_num),
       temp_coords(dimensions_num) {
-    temp_coords.shrink_to_fit();
+    temp_coords.reserve(dimensions_num);
 }
 
 template <typename T, T V>
-typename mat_inf<T, V>::m_proxy mat_inf<T, V>::operator[](int index) {
+mat_inf<T, V>::m_proxy mat_inf<T, V>::operator[](int index) {
     std::cout << "Operator [] called!\n";
     if (dimension_contol >= temp_coords.size()) {
         throw std::logic_error("Wrong number of dimensions op[] ");
     }
-    temp_coords[dimension_contol] = index;
-    dimension_contol++;
-    return m_proxy{*this, index};
+
+    return m_proxy(*this, std::vector<int>{index});
 }
 
 template <typename T, T V>
 mat_inf<T, V>::operator T() {
     std::cout << "Operator () called! return T\n";
-    std::cout << "start of () " << temp_coords.size() << '\n';
-    if (temp_coords.size() != dimensions) {
-        throw std::logic_error("Wrong number of dimensions op() ");
-    }
-    std::vector<int> coords = temp_coords;
-    temp_coords.clear();
-    std::cout << "after clear in () " << temp_coords.size() << '\n';
-    dimension_contol = 0;
 
-    if (data.find(coords) == data.end()) {
+    if (data.find(handle_coords()) == data.end()) {
         return default_value;
+    } else {
+        return data.at(handle_coords());
     }
-
-    return data[coords];
 }
 
 template <typename T, T V>
-mat_inf<T, V>& mat_inf<T, V>::operator=(T value) {
+T& mat_inf<T, V>::operator=(T& value) {
     std::cout << "Operator = called!\n";
     std::cout << "start of = " << temp_coords.size() << '\n';
+
+    // handle_coords return a vector
+    if (value != default_value) {
+        data.at(handle_coords()) = value;
+    } else {
+        data.erase(handle_coords());
+    }
+    return &value;
+}
+
+template <typename T, T V>
+std::vector<int> mat_inf<T, V>::handle_coords(const char* error_msg) {
     if (temp_coords.size() != dimensions) {
-        throw std::logic_error("Wrong number of dimensions op= ");
+        throw std::logic_error(error_msg);
     }
 
-    std::vector<int> coords = temp_coords;
-    temp_coords.clear();
-    std::cout << "after clear in = " << temp_coords.size() << '\n';
+    std::vector<int> coords = std::move(temp_coords);
+    // temp_coords.clear();
     dimension_contol = 0;
 
-    if (value == default_value) {
-        data.erase(coords);
-        return *this;
-    }
-
-    data[coords] = value;
-
-    return *this;
+    return temp_coords;
 }
