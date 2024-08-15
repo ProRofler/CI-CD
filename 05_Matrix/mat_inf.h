@@ -7,21 +7,18 @@
 #include "vector_hash.h"
 
 // infinite sparse matrix concept
-template <typename T, T V>
+template <typename T, T V, size_t N = 2>
 class mat_inf {
    private:
-    // user input
     T default_value;
-    size_t dimensions;
 
-    // matrix related
+    const size_t dimensions = N;
     std::unordered_map<std::vector<int>, T, vector_hash> data;
 
     // utils
-    std::vector<int> temp_coords;
-    size_t dimension_contol = 0;
+    std::vector<int> coords;
 
-    std::vector<int> handle_coords(const char* error_msg = "Unhandled error");
+    std::vector<int> handle_coords(const char* error_msg = "error\n");
 
     class iter {
        public:
@@ -45,39 +42,33 @@ class mat_inf {
         map_iter mapIter;
     };
 
+    template <size_t dim>
     class m_proxy {
        public:
-        m_proxy(mat_inf& parent, const std::vector<int>& indices)
-            : parent_(parent), indices_(indices) {}
-
-        m_proxy operator[](size_t index) {
-            std::vector<int> newIndices = indices_;
-            newIndices.push_back(index);
-            return m_proxy(parent_, newIndices);
+        auto operator[](int index) -> typename m_proxy<dim - 1>::Type {
+            coords.push_back(index);
+            return m_proxy<dim - 1ULL>()[index];
         }
-
-        operator T&() { return parent_.data[indices_]; }
-        operator const T&() const { return parent_.data.at(indices_); }
-
-       private:
-        mat_inf& parent_;
-        std::vector<int> indices_;
     };
 
+    // template <>
+    // class m_proxy<1ULL> {
+    //    public:
+    //     using Type = T&;
+    //     T& operator[](int index) {
+    //         coords.push_back(index);
+    //         return data[handle_coords()];
+    //     }
+    // };
+
    public:
-    mat_inf();                    // default constructor result in 2D matrix
-    mat_inf(int dimensions_num);  // constructor for N-dimensional matrix
-                                  // defined by user
+    mat_inf();  // default constructor result in 2D matrix
     ~mat_inf() = default;
 
-    operator T();
-    T& operator=(T& value);
-    m_proxy operator[](int index);
-    // T& operator*() const { return *data; }
+    auto operator[](int index) -> typename m_proxy<N>::Type;
 
     // get
     size_t size() { return data.size(); }
-    std::vector<int> get_coords() { return temp_coords; }
 
     auto begin() { return iter(data.begin()); }
     auto end() { return iter(data.end()); }
