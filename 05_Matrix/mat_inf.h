@@ -57,6 +57,7 @@ class m_proxy;
     // get
     size_t size() { return data.size(); }
     T& get_data(std::vector<int>& coordinates) const;
+    void t_coords_size(){std::cout << "Coords size: " << coords.size() << '\n';}
 
     auto begin() { return iter(data.begin()); }
     auto end() { return iter(data.end()); }

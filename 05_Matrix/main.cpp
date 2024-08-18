@@ -10,8 +10,9 @@ int main() {
     mat_inf<int, -1> matrix;
     assert(matrix.size() == 0);
 
+    matrix.t_coords_size();
+
     auto a = matrix[2][3];
-    a = 4;
     assert(a == -1);
     assert(matrix.size() == 0);
 

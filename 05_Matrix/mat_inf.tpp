@@ -4,7 +4,7 @@
 #include "mat_inf.h"
 
 template <typename T, T V, size_t N>
-mat_inf<T, V, N>::mat_inf() : default_value(V), coords(N) {
+mat_inf<T, V, N>::mat_inf() : default_value(V) {
     coords.reserve(N);
     if (dimensions < 1)
         throw std::logic_error(
@@ -29,10 +29,6 @@ std::vector<int> mat_inf<T, V, N>::handle_coords(const char* error_msg) {
 }
 template <typename T, T V, size_t N>
 void mat_inf<T, V, N>::handle_index(int index) {
-
-    for (auto a : coords){
-        std::cout << "*******Data: " << a << '\n';
-    }
 
     if (coords.size() >= dimensions)
         throw std::logic_error(
