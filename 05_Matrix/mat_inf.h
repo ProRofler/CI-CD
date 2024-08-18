@@ -6,9 +6,12 @@
 // #include "index_collector.h"
 #include "vector_hash.h"
 
+template <size_t dim, typename T, T V, size_t N>
+class m_proxy;
+
 // infinite sparse matrix concept
-template <typename T, T V, size_t N = 2>
-class mat_inf {
+    template <typename T, T V, size_t N = 2>
+    class mat_inf {
    private:
     T default_value;
 
@@ -17,8 +20,8 @@ class mat_inf {
 
     // utils
     std::vector<int> coords;
-
     std::vector<int> handle_coords(const char* error_msg = "error\n");
+    void handle_index(int index);
 
     class iter {
        public:
@@ -42,33 +45,18 @@ class mat_inf {
         map_iter mapIter;
     };
 
-    template <size_t dim>
-    class m_proxy {
-       public:
-        auto operator[](int index) -> typename m_proxy<dim - 1>::Type {
-            coords.push_back(index);
-            return m_proxy<dim - 1ULL>()[index];
-        }
-    };
-
-    // template <>
-    // class m_proxy<1ULL> {
-    //    public:
-    //     using Type = T&;
-    //     T& operator[](int index) {
-    //         coords.push_back(index);
-    //         return data[handle_coords()];
-    //     }
-    // };
+    friend class m_proxy<1, T, V, N>;
+    friend class m_proxy<N, T, V, N>;
 
    public:
     mat_inf();  // default constructor result in 2D matrix
     ~mat_inf() = default;
 
-    auto operator[](int index) -> typename m_proxy<N>::Type;
+    auto operator[](int index) -> decltype(auto);
 
     // get
     size_t size() { return data.size(); }
+    T& get_data(std::vector<int>& coordinates) const;
 
     auto begin() { return iter(data.begin()); }
     auto end() { return iter(data.end()); }
