@@ -5,7 +5,6 @@
 
 template <typename T, T V, size_t N>
 mat_inf<T, V, N>::mat_inf() : default_value(V) {
-    coords.reserve(N);
     if (dimensions < 1)
         throw std::logic_error(
             "Number of dimensions less than two are not allowed");
@@ -13,23 +12,19 @@ mat_inf<T, V, N>::mat_inf() : default_value(V) {
 
 template <typename T, T V, size_t N>
 auto mat_inf<T, V, N>::operator[](int index) -> decltype(auto) {
-    handle_index(index);
-    return m_proxy<N - 1ULL, T, V, N>(*this);
+    return m_proxy<N - 1ULL, T, V, N>(*this, index);
 }
 
 template <typename T, T V, size_t N>
-std::vector<int> mat_inf<T, V, N>::handle_coords(const char* error_msg) {
-    if (coords.size() != dimensions) {
-        throw std::logic_error(error_msg);
+T mat_inf<T, V, N>::get_value(std::vector<int> coordinates) {
+    if (data.find(coordinates) != data.end()) {
+        return data.at(coordinates);
+    } else {
+        return default_value;
     }
-    std::vector<int> make_coords = std::move(coords);
-    return make_coords;
 }
 template <typename T, T V, size_t N>
-void mat_inf<T, V, N>::handle_index(int index) {
-    if (coords.size() >= dimensions)
-        throw std::logic_error(
-            "Number of indexes are over the number of dimensions");
-
-    coords.push_back(index);
+void mat_inf<T, V, N>::set_value(std::vector<int> coordinates, T value) {
+    value == default_value ? data.erase(coordinates)
+                           : data[coordinates] = value;
 }
