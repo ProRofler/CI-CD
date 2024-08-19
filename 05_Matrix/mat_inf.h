@@ -10,8 +10,8 @@ template <size_t dim, typename T, T V, size_t N>
 class m_proxy;
 
 // infinite sparse matrix concept
-    template <typename T, T V, size_t N = 2>
-    class mat_inf {
+template <typename T, T V, size_t N = 2>
+class mat_inf {
    private:
     T default_value;
 
@@ -55,10 +55,7 @@ class m_proxy;
     auto operator[](int index) -> decltype(auto);
 
     // get
-    size_t size() { return data.size(); }
-    T& get_data(std::vector<int>& coordinates) const;
-    void t_coords_size(){std::cout << "Coords size: " << coords.size() << '\n';}
-
+    size_t size() const { return data.size(); }
     auto begin() { return iter(data.begin()); }
     auto end() { return iter(data.end()); }
 };

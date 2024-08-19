@@ -1,4 +1,6 @@
 #pragma once
+#include <assert.h>
+
 #include "mat_inf.h"
 
 template <size_t dim, typename T, T V, size_t N>
@@ -29,6 +31,15 @@ class m_proxy<1ULL, T, V, N> {
 
     T& operator[](int index) {
         matrix.handle_index(index);
-        return matrix.data[matrix.handle_coords()];
+
+        auto _vector = matrix.handle_coords();
+
+        if (matrix.data.find(_vector) != matrix.data.end()) {
+            return matrix.data.at(_vector);
+        } else {
+            matrix.data[_vector] = matrix.default_value;
+            return matrix.data.at(_vector);
+        }
     }
+    
 };
