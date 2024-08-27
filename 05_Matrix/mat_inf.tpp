@@ -28,3 +28,4 @@ void mat_inf<T, V, N>::set_value(std::vector<int> coordinates, T value) {
     value == default_value ? data.erase(coordinates)
                            : data[coordinates] = value;
 }
+

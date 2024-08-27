@@ -18,8 +18,8 @@ class mat_inf {
     const size_t dimensions = N;
     std::unordered_map<std::vector<int>, T, vector_hash> data;
 
-    T get_value(std::vector<int> coordinates);
     void set_value(std::vector<int> coordinates, T value);
+    T get_value(std::vector<int> coordinates);
 
 
     class iter {
