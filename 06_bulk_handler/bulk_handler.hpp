@@ -1,25 +1,33 @@
 #pragma once
 
+#include <assert.h>
+
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
 class bulk_handler {
    private:
-    std::vector<std::string> commands;
+    using commands = std::vector<std::string>;
+
+    commands commands_user;
+    commands commands_list;
+
+    const int static_size;
+    int dynamic_size;
+
+    bool use_dynamic_size = false;
+
+    void make_commands_list();
 
    public:
-    void add_command(std::string& input) { commands.push_back(input); }
+    bulk_handler() : static_size(3) { make_commands_list(); };
+    bulk_handler(int& argc) : static_size(argc) { make_commands_list(); };
 
-    void bulk() {
-        std::cout << "Bulk: ";
-        for (size_t i = 0; i < commands.size(); i++) {
-            std::cout << commands.at(i);
-            if (i < commands.size() - 1ULL) {
-                std::cout << ", ";
-            } else {
-                std::cout << std::endl;
-            }
-        }
+    void add_command(const std::string& input) {
+        commands_user.push_back(input);
     }
+
+    void run();
 };
