@@ -2,7 +2,6 @@
 
 #include <assert.h>
 
-#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -11,23 +10,20 @@ class bulk_handler {
    private:
     using commands = std::vector<std::string>;
 
-    commands commands_user;
-    commands commands_list;
+    std::vector<std::string> commands_user;
 
-    const int static_size;
-    int dynamic_size;
+    const size_t static_size;
 
     bool use_dynamic_size = false;
 
-    void make_commands_list();
+    void clear_io_buffer();
 
    public:
-    bulk_handler() : static_size(3) { make_commands_list(); };
-    bulk_handler(int& argc) : static_size(argc) { make_commands_list(); };
+    bulk_handler() : commands_user(16), static_size(3) {};
+    bulk_handler(int& argc) : commands_user(16), static_size(argc) {};
 
-    void add_command(const std::string& input) {
-        commands_user.push_back(input);
-    }
+    void add_command();
 
     void run();
+    void show_commands();
 };
