@@ -6,8 +6,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char *argv[]) {
     // BULK commmands handler
 
     bulk_handler bulk;
-
-    bulk.add_command();
+    bulk.start();
 
     return 0;
 }

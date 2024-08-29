@@ -17,13 +17,13 @@ class bulk_handler {
     bool use_dynamic_size = false;
 
     void clear_io_buffer();
+    void add_command();
+    void run_block();
+    void show_commands();
 
    public:
-    bulk_handler() : commands_user(16), static_size(3) {};
-    bulk_handler(int& argc) : commands_user(16), static_size(argc) {};
+    bulk_handler() : static_size(3) {commands_user.reserve(16); };
+    bulk_handler(int& argc) : static_size(argc) {commands_user.reserve(16);};
 
-    void add_command();
-
-    void run();
-    void show_commands();
+    void start();
 };

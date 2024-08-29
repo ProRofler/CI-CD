@@ -5,9 +5,16 @@
 
 #include "commands.hpp"
 
-void bulk_handler::run() {
+void bulk_handler::start() {
+    std::cout << "Enter command or type \"help\" to see the available options:"
+              << std::endl;
+    add_command();
+}
+
+void bulk_handler::run_block() {
     // run all commands
-    std::cout << "Ohhh so much commands to run!!\n";
+    std::cout << "Number of commands: " << commands_user.size()
+              << "\nOhhh so much commands to run!!" << std::endl;
 }
 
 void bulk_handler::show_commands() {
@@ -18,9 +25,10 @@ void bulk_handler::show_commands() {
 }
 
 void bulk_handler::add_command() {
-    clear_io_buffer();
     std::string input;
+
     std::cin >> input;
+    clear_io_buffer();
 
     // checking the command by user, refactor later
     if ((std::find(cmds::cmds_list.begin(), cmds::cmds_list.end(), input)) !=
@@ -32,7 +40,7 @@ void bulk_handler::add_command() {
 
     // checking the dynamic or static block, refactor
     if (commands_user.size() == static_size && !use_dynamic_size) {
-        run();
+        run_block();
     } else {
         add_command();
     }
