@@ -14,16 +14,20 @@ class bulk_handler {
 
     const size_t static_size;
 
+    bool run = true;
     bool use_dynamic_size = false;
 
-    void clear_io_buffer();
-    void add_command();
-    void run_block();
     void show_commands();
+    std::string get_user_input();
+    void run_block();
+
+    void clear_io_buffer();
+    void check_input(const std::string& input);
+    void check_static_block();
 
    public:
-    bulk_handler() : static_size(3) {commands_user.reserve(16); };
-    bulk_handler(int& argc) : static_size(argc) {commands_user.reserve(16);};
+    bulk_handler() : static_size(3) { commands_user.reserve(16); };
+    bulk_handler(int& argc) : static_size(argc) { commands_user.reserve(16); };
 
     void start();
 };
