@@ -2,9 +2,13 @@
 
 #include <algorithm>
 #include <limits>
+#include <chrono>
+#include <ctime>
 
-#define find_in_list \
-    (std::find(cmds::cmds_list.begin(), cmds::cmds_list.end(), input))
+#include "bulk_logger.hpp"
+
+#define find_in_list(list) \
+    (std::find(cmds::list.begin(), cmds::list.end(), input))
 
 #include "commands.hpp"
 
@@ -50,7 +54,7 @@ void bulk_handler::check_input(const std::string& input) {
         exit(0);
     } else if (input == "{" || input == "}") {
         handle_dynamic_block(input);
-    } else if (find_in_list == cmds::cmds_list.end()) {
+    } else if (find_in_list(cmds_list) == cmds::cmds_list.end()) {
         std::cout << "Invalid command" << std::endl;
     } else {
         commands_user.push_back(input);
