@@ -24,6 +24,7 @@ class bulk_handler {
     void clear_io_buffer();
     void check_input(const std::string& input);
     void check_static_block();
+    void handle_dynamic_block(const std::string& input);
 
    public:
     bulk_handler() : static_size(3) { commands_user.reserve(16); };

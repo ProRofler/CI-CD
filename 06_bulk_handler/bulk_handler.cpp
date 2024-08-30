@@ -34,6 +34,8 @@ void bulk_handler::show_commands() {
 void bulk_handler::run_block() {
     std::cout << "Number of commands: " << commands_user.size()
               << "\nOhhh so much commands to run!!" << std::endl;
+
+    commands_user.clear();
 }
 
 void bulk_handler::clear_io_buffer() {
@@ -42,10 +44,14 @@ void bulk_handler::clear_io_buffer() {
 }
 
 void bulk_handler::check_input(const std::string& input) {
-    if (find_in_list == cmds::cmds_list.end()) {
-        std::cout << "Invalid command" << std::endl;
-    } else if (input == "help") {
+    if (input == "help") {
         show_commands();
+    } else if (input == "exit") {
+        exit(0);
+    } else if (input == "{" || input == "}") {
+        handle_dynamic_block(input);
+    } else if (find_in_list == cmds::cmds_list.end()) {
+        std::cout << "Invalid command" << std::endl;
     } else {
         commands_user.push_back(input);
     }
@@ -59,5 +65,18 @@ void bulk_handler::check_static_block() {
     if (commands_user.size() == static_size) {
         run = false;
         run_block();
+    }
+}
+
+void bulk_handler::handle_dynamic_block(const std::string& input) {
+    if (input == "}" && use_dynamic_size) {
+        use_dynamic_size = false;
+        run_block();
+
+    } else if (input == "{" && !use_dynamic_size) {
+        use_dynamic_size = true;
+        if (!commands_user.empty()) {
+            run_block();
+        }
     }
 }
