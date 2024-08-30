@@ -1,16 +1,17 @@
 #include "bulk_handler.hpp"
 
 #include <algorithm>
-#include <limits>
 #include <chrono>
 #include <ctime>
+#include <limits>
 
 #include "bulk_logger.hpp"
 
-#define find_in_list(list) \
-    (std::find(cmds::list.begin(), cmds::list.end(), input))
+#define find_in_list(list)                       \
+    (std::find(cmds_list::commands_list.begin(), \
+               cmds_list::commands_list.end(), input))
 
-#include "commands.hpp"
+#include "bulk_commands_list.hpp"
 
 void bulk_handler::start() {
     std::cout << "Enter command or type \"help\" to see the available options:"
@@ -30,7 +31,7 @@ std::string bulk_handler::get_user_input() {
 
 void bulk_handler::show_commands() {
     std::cout << "Available commands:\n";
-    for (auto& c : cmds::cmds_list) {
+    for (auto& c : cmds_list::commands_list) {
         std::cout << "- " << c << std::endl;
     }
 }
@@ -54,7 +55,7 @@ void bulk_handler::check_input(const std::string& input) {
         exit(0);
     } else if (input == "{" || input == "}") {
         handle_dynamic_block(input);
-    } else if (find_in_list(cmds_list) == cmds::cmds_list.end()) {
+    } else if (find_in_list(cmds_list) == cmds_list::commands_list.end()) {
         std::cout << "Invalid command" << std::endl;
     } else {
         commands_user.push_back(input);
