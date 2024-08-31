@@ -5,12 +5,13 @@
 
 #include "bulk_commands_handler.hpp"
 
-
 class bulk_io {
     const std::shared_ptr<bulk_commands_handler> p_command_handler = nullptr;
 
    public:
-    bulk_io() {}
+    bulk_io() = delete;
+    bulk_io(std::shared_ptr<bulk_commands_handler> p_com_handler)
+        : p_command_handler(p_com_handler) {}
 
     // output
     void print_greeting() const;
