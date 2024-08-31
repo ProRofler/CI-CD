@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-#include "bulk_commands_handler.hpp"
+class bulk_commands_handler;
 
 class bulk_io {
     const std::shared_ptr<bulk_commands_handler> p_command_handler = nullptr;
