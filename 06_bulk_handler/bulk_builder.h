@@ -8,10 +8,10 @@
 #include "bulk_state_machine.h"
 
 // forward declarations
-class bulk_commands_handler;
-class bulk_io;
-class bulk_logger;
-class bulk_state_machine;
+// class bulk_commands_handler;
+// class bulk_io;
+// class bulk_logger;
+// class bulk_state_machine;
 
 class bulk_builder {
    private:
