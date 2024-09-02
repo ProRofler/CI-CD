@@ -18,7 +18,7 @@ class bulk_io {
     // output
     void print_greeting() const;
     void print_commands() const;
-    void print_error(const std::string& err_msg) const;
+    void print_mesage(const std::string& message) const;
     void print_run(const std::string& input) const;
     void print_exit() const;
 

@@ -15,10 +15,6 @@ class bulk_commands_handler {
     bool command_is_valid(const std::string& input) const;
     void command_pass(const std::string& input) const;
 
-    // run related
-    void state_check();
-    bool is_dynamic_check() const;
-
    public:
     bulk_commands_handler() = delete;
     bulk_commands_handler(bulk_builder& _builder) : builder(_builder) {}

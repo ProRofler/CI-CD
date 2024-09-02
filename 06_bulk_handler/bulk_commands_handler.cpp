@@ -15,11 +15,18 @@ bool bulk_commands_handler::command_is_valid(const std::string& input) const {
 }
 
 void bulk_commands_handler::handle_input(const std::string& input) {
-    if (command_is_valid(input)) {
-        builder.get_io_ptr()->print_error("Good shit!");
+    if (!input.empty() && (input.at(0) == '{' || input.at(0) == '}')) {
+        builder.get_io_ptr()->print_mesage("Switching state...");
+        builder.get_io_ptr()->input_command();
+    } else if (command_is_valid(input)) {
+        builder.get_io_ptr()->print_mesage("Good shit!");
         builder.get_io_ptr()->input_command();
     } else {
-        builder.get_io_ptr()->print_error("Invalid command");
+        builder.get_io_ptr()->print_mesage("Invalid command");
         builder.get_io_ptr()->input_command();
     }
+}
+
+void bulk_commands_handler::command_pass([[maybe_unused]]const std::string& input) const{
+    // pass the command futher the chain
 }

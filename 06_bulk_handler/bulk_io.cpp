@@ -12,19 +12,18 @@ void bulk_io::print_greeting() const {
            "type \"help\" for options. Or type \"exit\" to stop the program.\n";
 }
 
-void bulk_io::print_error(const std::string& err_msg) const {
-    std::cout << err_msg << std::endl;
+void bulk_io::print_mesage(const std::string& message) const {
+    std::cout << message << std::endl;
 }
 
 // input
 void bulk_io::clear_io_buffer() {
-    std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.clear();
 }
 
 void bulk_io::input_command() {
     std::string u_input;
-    std::cin >> u_input >> std::ws;
-    clear_io_buffer();
+    std::getline(std::cin >> std::ws, u_input);
     p_command_handler->handle_input(u_input);
 }
