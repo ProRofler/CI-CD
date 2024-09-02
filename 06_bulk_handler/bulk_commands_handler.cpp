@@ -18,15 +18,17 @@ void bulk_commands_handler::handle_input(const std::string& input) {
     if (!input.empty() && (input.at(0) == '{' || input.at(0) == '}')) {
         builder.get_io_ptr()->print_mesage("Switching state...");
         builder.get_io_ptr()->input_command();
+    } else if (!input.empty() && (input == "exit" || input == "exit")) {
+        // build basic command
     } else if (command_is_valid(input)) {
-        builder.get_io_ptr()->print_mesage("Good shit!");
-        builder.get_io_ptr()->input_command();
+        // build custom command
     } else {
         builder.get_io_ptr()->print_mesage("Invalid command");
         builder.get_io_ptr()->input_command();
     }
 }
 
-void bulk_commands_handler::command_pass([[maybe_unused]]const std::string& input) const{
+void bulk_commands_handler::command_pass(
+    [[maybe_unused]] const std::string& input) const {
     // pass the command futher the chain
 }

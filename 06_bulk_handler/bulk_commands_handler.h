@@ -4,14 +4,12 @@
 #include <string>
 
 class bulk_builder;
-class command;
 
 class bulk_commands_handler {
    private:
     bulk_builder& builder;
 
     // commands related
-    std::unique_ptr<command> create_command(const std::string command);
     bool command_is_valid(const std::string& input) const;
     void command_pass(const std::string& input) const;
 
