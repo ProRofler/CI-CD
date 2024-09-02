@@ -10,7 +10,7 @@ int main() {
     mat_inf<int, -1> matrix;
     assert(matrix.size() == 0);
 
-    auto a = matrix[2][3];
+    [[maybe_unused]] auto a = matrix[2][3];
     assert(a == -1);
     assert(matrix.size() == 0);
 
@@ -33,7 +33,7 @@ int main() {
     mat_inf<int, -3, 4> matrix_4d;
     assert(matrix_4d.size() == 0);
 
-    auto b = matrix_4d[2][3][2][5];
+    [[maybe_unused]] auto b = matrix_4d[2][3][2][5];
     assert(b == -3);
     assert(matrix_4d.size() == 0);
 
