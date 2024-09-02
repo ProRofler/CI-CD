@@ -5,4 +5,6 @@ void bulk_builder::create_system() {
     p_io = std::make_unique<bulk_io>(p_commands_handler);
     p_logger = std::make_unique<bulk_logger>();
     p_state_machine = std::make_unique<bulk_state_machine>(p_commands_handler);
+    p_command_builder_basic = std::make_unique<bulk_command_builder_basic>();
+    p_command_builder_custom = std::make_unique<bulk_command_builder_custom>();
 }

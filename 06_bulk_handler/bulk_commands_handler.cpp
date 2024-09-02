@@ -19,7 +19,7 @@ void bulk_commands_handler::handle_input(const std::string& input) {
         builder.get_io_ptr()->print_mesage("Switching state...");
         builder.get_io_ptr()->input_command();
     } else if (!input.empty() && (input == "exit" || input == "exit")) {
-        // build basic command
+        // make basic command
     } else if (command_is_valid(input)) {
         // build custom command
     } else {
