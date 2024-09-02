@@ -6,7 +6,9 @@
 class bulk_commands_handler;
 
 class bulk_io {
+   private:
     const std::shared_ptr<bulk_commands_handler> p_command_handler = nullptr;
+    void clear_io_buffer();
 
    public:
     bulk_io() = delete;
@@ -16,8 +18,8 @@ class bulk_io {
     // output
     void print_greeting() const;
     void print_commands() const;
-    void print_error(const std::string& input) const;
-    void print_actual(const std::string& input) const;
+    void print_error(const std::string& err_msg) const;
+    void print_run(const std::string& input) const;
     void print_exit() const;
 
     // input
