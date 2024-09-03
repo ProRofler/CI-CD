@@ -11,7 +11,7 @@ class bulk_commands_handler {
 
     // commands related
     bool command_is_valid(const std::string& input) const;
-    void command_pass(const std::string& input) const;
+    void send_to_runner(const std::string& input);
 
    public:
     bulk_commands_handler() = delete;

@@ -24,7 +24,7 @@ class bulk_command {
           time_of_creation(std::time(nullptr)),
           bulk_io_ref(_bulk_io_ref) {}
     bulk_command(bulk_command& other) = delete;
-    bulk_command(bulk_command&&) = delete;
+    constexpr bulk_command(bulk_command&&) = default;
 
     const std::time_t& get_creation_time() const { return time_of_creation; };
     virtual void command_action() = 0;
@@ -55,6 +55,6 @@ class bulk_command_custom : public bulk_command {
             std::this_thread::sleep_for(5ms);
             std::cout << '.';
         }
-        std::cout << "Done!" << std::endl;
+        std::cout << "\nDone!" << std::endl;
     }
 };
