@@ -27,3 +27,9 @@ void bulk_io::input_command() {
     std::getline(std::cin >> std::ws, u_input);
     p_command_handler->handle_input(u_input);
 }
+
+void bulk_io::print_commands() const {
+    std::cout << "If I werent't lazy you would've seen a list of available "
+                 "commands here!"
+              << std::endl;
+}

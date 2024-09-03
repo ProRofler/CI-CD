@@ -1,7 +1,8 @@
 #include "bulk_commands_handler.h"
 
-#include <algorithm>
 #include <assert.h>
+
+#include <algorithm>
 
 #include "bulk_builder.h"
 #include "bulk_commands_list.h"
@@ -17,10 +18,11 @@ bool bulk_commands_handler::command_is_valid(const std::string& input) const {
 
 void bulk_commands_handler::handle_input(const std::string& input) {
     if (!input.empty() && (input.at(0) == '{' || input.at(0) == '}')) {
-        builder.get_io_ptr()->print_mesage("Switching state...");
-        builder.get_io_ptr()->input_command();
-    } else if (!input.empty() && (input == "exit" || input == "exit")) {
-        assert(false && "Not yet");
+        builder.get_runner_ptr()->switch_state(input.at(0));
+    } else if (!input.empty() && (input == "help" || input == "exit")) {
+        auto command = builder.get_command_builder_basic_ptr()->build_command(
+            input, *builder.get_io_ptr());
+        command->command_action();
     } else if (command_is_valid(input)) {
         send_to_runner(input);
     } else {

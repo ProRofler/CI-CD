@@ -17,3 +17,17 @@ void bulk_runner::run_queue() {
     };
     queue.clear();
 }
+
+void bulk_runner::switch_state(const char& input) {
+    switch (dynamic) {
+        case true:
+            if (input == '}') dynamic = !dynamic;
+            if (!is_queue_empty()) run_queue();
+            break;
+
+        default:
+            if (input == '{') dynamic = !dynamic;
+            if (!is_queue_empty()) run_queue();
+            break;
+    }
+}
