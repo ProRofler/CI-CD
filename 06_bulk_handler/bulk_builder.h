@@ -8,12 +8,6 @@
 #include "bulk_logger.h"
 #include "bulk_runner.h"
 
-// forward declarations
-// class bulk_commands_handler;
-// class bulk_io;
-// class bulk_logger;
-// class bulk_state_machine;
-
 class bulk_builder {
    private:
     std::shared_ptr<bulk_commands_handler> p_commands_handler = nullptr;
