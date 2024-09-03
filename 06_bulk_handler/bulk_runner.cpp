@@ -1,6 +1,7 @@
 #include "bulk_runner.h"
 
 #include "bulk_command.h"
+#include "bulk_logger.h"
 
 bool bulk_runner::is_full() const { return queue.size() == static_size; }
 
@@ -15,6 +16,7 @@ void bulk_runner::run_queue() {
     for (auto& com : queue) {
         com->command_action();
     };
+    logger.save_to_log(queue);
     queue.clear();
 }
 

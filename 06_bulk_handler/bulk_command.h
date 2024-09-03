@@ -21,10 +21,11 @@ class bulk_command {
           time_of_creation(std::time(nullptr)),
           bulk_io_ref(_bulk_io_ref) {}
     bulk_command(bulk_command& other) = delete;
-    constexpr bulk_command(bulk_command&&) = default;
+    bulk_command(bulk_command&&) = default;
 
     const std::time_t& get_creation_time() const { return time_of_creation; };
     virtual void command_action() = 0;
+    const std::string& get_command_name() const { return command; }
 };
 
 class bulk_command_basic : public bulk_command {
