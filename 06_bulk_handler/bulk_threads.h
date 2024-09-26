@@ -15,6 +15,7 @@ class bulk_threads {
     }
 
     ~bulk_threads() {
+        stop = true;
         if (log_thread.joinable()) log_thread.join();
         if (file_1_thread.joinable()) file_1_thread.join();
         if (file_2_thread.joinable()) file_2_thread.join();
@@ -26,14 +27,15 @@ class bulk_threads {
    private:
     void log_tasks_control();
     void file_tasks_control();
+    void tasks_loop(std::mutex& mutex, std::queue<std::function<void()>>& queue, std::condition_variable& cv);
 
     std::thread log_thread, file_1_thread, file_2_thread;
 
     std::queue<std::function<void()>> file_tasks;
     std::queue<std::function<void()>> log_tasks;
 
-    std::mutex queue_mutex;
-    std::condition_variable condition;
+    std::mutex file_mtx, log_mtx;
+    std::condition_variable file_condition, log_condition;
 
     bool stop;
 };
