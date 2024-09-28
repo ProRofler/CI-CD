@@ -1,7 +1,10 @@
 #include "bulk_runner.h"
 
+#include <functional>
+
 #include "bulk_command.h"
 #include "bulk_logger.h"
+#include "bulk_threads.h"
 
 bool bulk_runner::is_full() const { return queue.size() == static_size; }
 
@@ -14,10 +17,16 @@ void bulk_runner::add_to_bulk(std::unique_ptr<bulk_command> command) {
 
 void bulk_runner::run_queue() {
     for (auto& com : queue) {
-        com->command_action();
+        std::function<void()> task = [com = com.get()]() {
+            if (com) {
+                com->command_action();
+            };
+        };
+        threads.run_in_file_thread(task);
     };
+
     logger.save_to_log(queue);
-    queue.clear();
+    //queue.clear();
 }
 
 void bulk_runner::switch_state(const char& input) {

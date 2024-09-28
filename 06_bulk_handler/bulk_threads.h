@@ -2,6 +2,7 @@
 
 #include <condition_variable>
 #include <functional>
+#include <memory>
 #include <mutex>
 #include <queue>
 #include <thread>
@@ -21,13 +22,14 @@ class bulk_threads {
         if (file_2_thread.joinable()) file_2_thread.join();
     }
 
-    void run_in_log_thread(std::function<void()> task);
-    void run_in_file_thread(std::function<void()> task);
+    void run_in_log_thread(const std::function<void()> task);
+    void run_in_file_thread(const std::function<void()> task);
 
    private:
     void log_tasks_control();
     void file_tasks_control();
-    void tasks_loop(std::mutex& mutex, std::queue<std::function<void()>>& queue, std::condition_variable& cv);
+    void tasks_loop(std::mutex& mutex, std::queue<std::function<void()>>& queue,
+                    std::condition_variable& cv);
 
     std::thread log_thread, file_1_thread, file_2_thread;
 
