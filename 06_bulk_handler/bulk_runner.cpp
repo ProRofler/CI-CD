@@ -16,17 +16,22 @@ void bulk_runner::add_to_bulk(std::unique_ptr<bulk_command> command) {
 }
 
 void bulk_runner::run_queue() {
+    // ****** ATTEMPT TO RUN IN THREAD POOL (DOESNT WORK)
+    // for (auto& com : queue) {
+    //     std::function<void()> task = [com = com.get()]() {
+    //         if (com) {
+    //             com->command_action();
+    //         };
+    //     };
+    //     threads.run_in_file_thread(task);
+    // };
+
     for (auto& com : queue) {
-        std::function<void()> task = [com = com.get()]() {
-            if (com) {
-                com->command_action();
-            };
-        };
-        threads.run_in_file_thread(task);
+        com->command_action();
     };
 
     logger.save_to_log(queue);
-    //queue.clear();
+    queue.clear();
 }
 
 void bulk_runner::switch_state(const char& input) {
