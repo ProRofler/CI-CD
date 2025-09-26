@@ -1,0 +1,7 @@
+<map id="bulk_command_custom" name="bulk_command_custom">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,169,165,195"/>
+<area shape="rect" id="Node000002" href="$d1/da1/classbulk__command.html" title=" " alt="" coords="30,94,140,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,135,88,169,82,169,82,135"/>
+<area shape="rect" id="Node000003" href="$dc/dcd/classbulk__io.html" title=" " alt="" coords="54,5,116,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="88,47,88,94,82,94,82,47"/>
+</map>
